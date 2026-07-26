@@ -17,7 +17,10 @@ function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div
+      className="min-h-screen flex items-center justify-center px-4 bg-cover bg-center"
+      style={{ backgroundImage: "url(/login-bg.jpg)" }}
+    >
       <div className="w-full max-w-sm bg-white/85 backdrop-blur-sm rounded-2xl shadow-sm border border-rose-100 p-8">
         <h1 className="text-2xl font-bold text-slate-800 mb-1">
           {mode === "login" ? "Вход" : "Регистрация"}
