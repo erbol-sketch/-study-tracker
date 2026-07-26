@@ -18,9 +18,15 @@ function emptyData() {
     subjects: [
       { id: "it", name: "IT", entries: [] }, // entries: { id, date, text }
     ],
-    tasks: [],         // { id, date, text, done }
-    vocab: [],         // { id, word, translation, example }
+    tasks: [],         // { id, date, text, done } — старый однодневный список
     habits: [],        // { id, text, marks: { "2026-07-20": true|false, ... } }
+    vocabDecks: [
+      {
+        id: "general",
+        name: "Общие слова",
+        words: [], // { id, word, translation, example }
+      },
+    ],
   };
 }
 
@@ -44,8 +50,16 @@ export function DataProvider({ children }) {
     try {
       const raw = localStorage.getItem(storageKey(currentUser));
       const parsed = raw ? JSON.parse(raw) : emptyData();
-      // на случай если у пользователя уже есть старые сохранённые данные без habits
+
+      // миграция для тех, у кого данные сохранены в старом формате
       if (!parsed.habits) parsed.habits = [];
+      if (!parsed.vocabDecks) {
+        // если раньше было плоское поле vocab — переносим все слова в одну колоду
+        const oldWords = Array.isArray(parsed.vocab) ? parsed.vocab : [];
+        parsed.vocabDecks = [{ id: "general", name: "Общие слова", words: oldWords }];
+        delete parsed.vocab;
+      }
+
       setData(parsed);
     } catch {
       setData(emptyData());
@@ -116,7 +130,7 @@ export function DataProvider({ children }) {
     }));
   }
 
-  // ---------- Tasks / schedule (старый однодневный список, оставлен на всякий случай) ----------
+  // ---------- Tasks (старый однодневный список, оставлен на всякий случай) ----------
 
   function addTask(text, date) {
     setData((prev) => ({
@@ -165,7 +179,6 @@ export function DataProvider({ children }) {
     }));
   }
 
-  // Клик по клетке дня циклит: не отмечено -> сделано (true) -> не сделано (false) -> не отмечено
   function cycleHabitMark(habitId, dateKey) {
     setData((prev) => ({
       ...prev,
@@ -181,19 +194,51 @@ export function DataProvider({ children }) {
     }));
   }
 
-  // ---------- Vocabulary ----------
+  // ---------- Vocabulary: колоды (файлы) слов + карточки внутри ----------
 
-  function addWord(word, translation, example) {
+  function addVocabDeck(name) {
+    const id = crypto.randomUUID();
     setData((prev) => ({
       ...prev,
-      vocab: [...prev.vocab, { id: crypto.randomUUID(), word, translation, example }],
+      vocabDecks: [...prev.vocabDecks, { id, name, words: [] }],
+    }));
+    return id;
+  }
+
+  function renameVocabDeck(deckId, name) {
+    setData((prev) => ({
+      ...prev,
+      vocabDecks: prev.vocabDecks.map((d) => (d.id === deckId ? { ...d, name } : d)),
     }));
   }
 
-  function deleteWord(id) {
+  function deleteVocabDeck(deckId) {
     setData((prev) => ({
       ...prev,
-      vocab: prev.vocab.filter((w) => w.id !== id),
+      vocabDecks: prev.vocabDecks.filter((d) => d.id !== deckId),
+    }));
+  }
+
+  function addWord(deckId, word, translation, example) {
+    setData((prev) => ({
+      ...prev,
+      vocabDecks: prev.vocabDecks.map((d) =>
+        d.id === deckId
+          ? {
+              ...d,
+              words: [...d.words, { id: crypto.randomUUID(), word, translation, example }],
+            }
+          : d
+      ),
+    }));
+  }
+
+  function deleteWord(deckId, wordId) {
+    setData((prev) => ({
+      ...prev,
+      vocabDecks: prev.vocabDecks.map((d) =>
+        d.id === deckId ? { ...d, words: d.words.filter((w) => w.id !== wordId) } : d
+      ),
     }));
   }
 
@@ -213,6 +258,9 @@ export function DataProvider({ children }) {
     deleteHabit,
     renameHabit,
     cycleHabitMark,
+    addVocabDeck,
+    renameVocabDeck,
+    deleteVocabDeck,
     addWord,
     deleteWord,
   };
