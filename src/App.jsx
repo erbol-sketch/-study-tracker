@@ -9,37 +9,34 @@ import English from "./pages/English";
 import Subjects from "./pages/Subjects";
 import Vocabulary from "./pages/Vocabulary";
 import SakuraPetals from "./components/SakuraPetals";
+import MusicPlayer from "./components/MusicPlayer";
 
 function AppContent() {
   const { currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
 
-  if (!currentUser) {
-    return (
-      <div className="relative min-h-screen bg-gradient-to-br from-rose-50 via-white to-indigo-50">
-        <SakuraPetals />
-        <div className="relative z-10">
-          <Login />
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <DataProvider>
-      <div className="relative min-h-screen bg-gradient-to-br from-rose-50 via-white to-indigo-50">
-        <SakuraPetals />
-        <div className="relative z-10">
-          <Layout activeTab={activeTab} setActiveTab={setActiveTab}>
-            {activeTab === "overview" && <Overview />}
-            {activeTab === "schedule" && <Schedule />}
-            {activeTab === "english" && <English />}
-            {activeTab === "subjects" && <Subjects />}
-            {activeTab === "vocab" && <Vocabulary />}
-          </Layout>
-        </div>
+    <div className="relative min-h-screen bg-gradient-to-br from-rose-50 via-white to-indigo-50">
+      {/* Фон и музыка монтируются один раз и не перезапускаются при входе/выходе */}
+      <SakuraPetals />
+      <MusicPlayer />
+
+      <div className="relative z-10">
+        {!currentUser ? (
+          <Login />
+        ) : (
+          <DataProvider>
+            <Layout activeTab={activeTab} setActiveTab={setActiveTab}>
+              {activeTab === "overview" && <Overview />}
+              {activeTab === "schedule" && <Schedule />}
+              {activeTab === "english" && <English />}
+              {activeTab === "subjects" && <Subjects />}
+              {activeTab === "vocab" && <Vocabulary />}
+            </Layout>
+          </DataProvider>
+        )}
       </div>
-    </DataProvider>
+    </div>
   );
 }
 
