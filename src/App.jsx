@@ -8,24 +8,37 @@ import Schedule from "./pages/Schedule";
 import English from "./pages/English";
 import Subjects from "./pages/Subjects";
 import Vocabulary from "./pages/Vocabulary";
+import SakuraPetals from "./components/SakuraPetals";
 
 function AppContent() {
   const { currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
 
   if (!currentUser) {
-    return <Login />;
+    return (
+      <div className="relative min-h-screen bg-gradient-to-br from-rose-50 via-white to-indigo-50">
+        <SakuraPetals />
+        <div className="relative z-10">
+          <Login />
+        </div>
+      </div>
+    );
   }
 
   return (
     <DataProvider>
-      <Layout activeTab={activeTab} setActiveTab={setActiveTab}>
-        {activeTab === "overview" && <Overview />}
-        {activeTab === "schedule" && <Schedule />}
-        {activeTab === "english" && <English />}
-        {activeTab === "subjects" && <Subjects />}
-        {activeTab === "vocab" && <Vocabulary />}
-      </Layout>
+      <div className="relative min-h-screen bg-gradient-to-br from-rose-50 via-white to-indigo-50">
+        <SakuraPetals />
+        <div className="relative z-10">
+          <Layout activeTab={activeTab} setActiveTab={setActiveTab}>
+            {activeTab === "overview" && <Overview />}
+            {activeTab === "schedule" && <Schedule />}
+            {activeTab === "english" && <English />}
+            {activeTab === "subjects" && <Subjects />}
+            {activeTab === "vocab" && <Vocabulary />}
+          </Layout>
+        </div>
+      </div>
     </DataProvider>
   );
 }
