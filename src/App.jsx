@@ -17,6 +17,18 @@ function AppContent() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-rose-50 via-white to-indigo-50">
+      {/* Фоновая картина — только когда пользователь залогинен, на логине её нет */}
+      {currentUser && (
+        <>
+          <div
+            className="fixed inset-0 z-0 bg-cover bg-center"
+            style={{ backgroundImage: "url(/mountains-bg.jpg)" }}
+          />
+          {/* лёгкая белая дымка поверх, чтобы карточки/текст не терялись на фоне картины */}
+          <div className="fixed inset-0 z-0 bg-white/55" />
+        </>
+      )}
+
       {/* Фон и музыка монтируются один раз и не перезапускаются при входе/выходе */}
       <SakuraPetals />
       <MusicPlayer />
