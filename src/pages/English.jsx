@@ -19,7 +19,7 @@ function English() {
       <h2 className="text-2xl font-bold text-slate-800 mb-1">Английский</h2>
       <p className="text-slate-500 mb-6">Отметь, чем занимался сегодня</p>
 
-      <form onSubmit={handleSubmit} className="bg-white border border-slate-200 rounded-2xl p-5 mb-6">
+      <form onSubmit={handleSubmit} className="bg-white/80 backdrop-blur-sm border border-rose-100 rounded-2xl p-5 mb-6 shadow-sm">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
           {ENGLISH_SKILLS.map((s) => (
             <button
@@ -27,7 +27,7 @@ function English() {
               key={s}
               onClick={() => setSkill(s)}
               className={`py-2 rounded-lg text-sm font-medium transition
-                ${skill === s ? "bg-indigo-600 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}
+                ${skill === s ? "bg-rose-500 text-white shadow-sm shadow-rose-200" : "bg-rose-50 text-slate-600 hover:bg-rose-100"}`}
             >
               {SKILL_LABELS[s]}
             </button>
@@ -38,13 +38,13 @@ function English() {
           value={note}
           onChange={(e) => setNote(e.target.value)}
           placeholder="Что именно делал? (необязательно)"
-          className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-3"
+          className="w-full px-3 py-2 rounded-lg border border-rose-200 bg-white/90 focus:outline-none focus:ring-2 focus:ring-rose-400 mb-3"
           rows={2}
         />
 
         <button
           type="submit"
-          className="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700"
+          className="px-4 py-2 rounded-lg bg-rose-500 text-white font-medium hover:bg-rose-600"
         >
           Записать
         </button>
@@ -58,11 +58,11 @@ function English() {
           {sortedLogs.map((log) => (
             <div
               key={log.id}
-              className="flex justify-between items-start bg-white border border-slate-200 rounded-xl px-4 py-3"
+              className="flex justify-between items-start bg-white/80 backdrop-blur-sm border border-rose-100 rounded-xl px-4 py-3 shadow-sm"
             >
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600">
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-50 text-rose-600">
                     {SKILL_LABELS[log.skill]}
                   </span>
                   <span className="text-xs text-slate-400">{log.date}</span>

@@ -12,8 +12,8 @@ function Layout({ activeTab, setActiveTab, children }) {
   const { currentUser, logout } = useAuth();
 
   return (
-    <div className="min-h-screen bg-slate-50 flex">
-      <aside className="w-60 bg-white border-r border-slate-200 flex flex-col p-4">
+    <div className="min-h-screen flex">
+      <aside className="w-60 bg-white/80 backdrop-blur-sm border-r border-rose-100 flex flex-col p-4">
         <div className="mb-8 px-2">
           <h1 className="text-lg font-bold text-slate-800">Study Tracker</h1>
           <p className="text-xs text-slate-400 mt-0.5">{currentUser}</p>
@@ -26,8 +26,8 @@ function Layout({ activeTab, setActiveTab, children }) {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium transition text-left
                 ${activeTab === tab.id
-                  ? "bg-indigo-50 text-indigo-700"
-                  : "text-slate-600 hover:bg-slate-100"}`}
+                  ? "bg-rose-50 text-rose-600"
+                  : "text-slate-600 hover:bg-rose-50/60"}`}
             >
               <span>{tab.icon}</span>
               {tab.label}
@@ -37,7 +37,7 @@ function Layout({ activeTab, setActiveTab, children }) {
 
         <button
           onClick={logout}
-          className="px-3 py-2.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-slate-100 text-left"
+          className="px-3 py-2.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-rose-50/60 text-left"
         >
           🚪 Выйти
         </button>

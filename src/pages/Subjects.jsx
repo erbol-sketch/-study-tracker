@@ -36,7 +36,7 @@ function Subjects() {
             key={s.id}
             onClick={() => setActiveSubjectId(s.id)}
             className={`px-4 py-2 rounded-full text-sm font-medium transition
-              ${activeSubject?.id === s.id ? "bg-indigo-600 text-white" : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-100"}`}
+              ${activeSubject?.id === s.id ? "bg-rose-500 text-white shadow-sm shadow-rose-200" : "bg-white/80 backdrop-blur-sm border border-rose-100 text-slate-600 hover:bg-rose-50"}`}
           >
             {s.name}
           </button>
@@ -44,7 +44,7 @@ function Subjects() {
 
         <button
           onClick={() => setShowAddSubject((v) => !v)}
-          className="px-4 py-2 rounded-full text-sm font-medium border border-dashed border-slate-300 text-slate-500 hover:bg-slate-100"
+          className="px-4 py-2 rounded-full text-sm font-medium border border-dashed border-rose-200 text-rose-400 hover:bg-rose-50"
         >
           + Добавить предмет
         </button>
@@ -57,9 +57,9 @@ function Subjects() {
             value={newSubjectName}
             onChange={(e) => setNewSubjectName(e.target.value)}
             placeholder="Например: История"
-            className="flex-1 px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="flex-1 px-3 py-2 rounded-lg border border-rose-200 bg-white/80 focus:outline-none focus:ring-2 focus:ring-rose-400"
           />
-          <button type="submit" className="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700">
+          <button type="submit" className="px-4 py-2 rounded-lg bg-rose-500 text-white font-medium hover:bg-rose-600">
             Создать
           </button>
         </form>
@@ -67,7 +67,7 @@ function Subjects() {
 
       {activeSubject && (
         <>
-          <form onSubmit={handleAddEntry} className="bg-white border border-slate-200 rounded-2xl p-5 mb-6">
+          <form onSubmit={handleAddEntry} className="bg-white/80 backdrop-blur-sm border border-rose-100 rounded-2xl p-5 mb-6 shadow-sm">
             <label className="block text-sm font-medium text-slate-600 mb-2">
               Что понял сегодня по теме «{activeSubject.name}»?
             </label>
@@ -75,10 +75,10 @@ function Subjects() {
               value={entryText}
               onChange={(e) => setEntryText(e.target.value)}
               rows={3}
-              className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-3"
+              className="w-full px-3 py-2 rounded-lg border border-rose-200 bg-white/90 focus:outline-none focus:ring-2 focus:ring-rose-400 mb-3"
               placeholder="Опиши своими словами — это помогает закрепить материал"
             />
-            <button type="submit" className="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700">
+            <button type="submit" className="px-4 py-2 rounded-lg bg-rose-500 text-white font-medium hover:bg-rose-600">
               Сохранить
             </button>
           </form>
@@ -91,7 +91,7 @@ function Subjects() {
               {[...activeSubject.entries].reverse().map((entry) => (
                 <div
                   key={entry.id}
-                  className="flex justify-between items-start bg-white border border-slate-200 rounded-xl px-4 py-3"
+                  className="flex justify-between items-start bg-white/80 backdrop-blur-sm border border-rose-100 rounded-xl px-4 py-3 shadow-sm"
                 >
                   <div>
                     <p className="text-xs text-slate-400 mb-1">{entry.date}</p>

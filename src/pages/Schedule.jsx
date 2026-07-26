@@ -27,11 +27,11 @@ function Schedule() {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Например: Сделать Listening 20 минут"
-          className="flex-1 px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="flex-1 px-3 py-2 rounded-lg border border-rose-200 bg-white/80 focus:outline-none focus:ring-2 focus:ring-rose-400"
         />
         <button
           type="submit"
-          className="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700"
+          className="px-4 py-2 rounded-lg bg-rose-500 text-white font-medium hover:bg-rose-600"
         >
           Добавить
         </button>
@@ -57,12 +57,12 @@ function TaskList({ title, tasks, toggleTask, deleteTask }) {
           {tasks.map((t) => (
             <div
               key={t.id}
-              className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl px-4 py-3"
+              className="flex items-center gap-3 bg-white/80 backdrop-blur-sm border border-rose-100 rounded-xl px-4 py-3 shadow-sm"
             >
               <button
                 onClick={() => toggleTask(t.id)}
                 className={`w-6 h-6 flex items-center justify-center rounded-md text-sm font-bold shrink-0
-                  ${t.done ? "bg-emerald-500 text-white" : "bg-slate-100 text-slate-400"}`}
+                  ${t.done ? "bg-emerald-500 text-white" : "bg-rose-50 text-slate-400"}`}
               >
                 {t.done ? "✓" : "✕"}
               </button>

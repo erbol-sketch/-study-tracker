@@ -22,7 +22,7 @@ function Overview() {
       <h2 className="text-2xl font-bold text-slate-800 mb-1">Обзор прогресса</h2>
       <p className="text-slate-500 mb-8">Активность за последние 7 дней</p>
 
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-6">
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-rose-100 shadow-sm p-6 mb-6">
         <h3 className="font-semibold text-slate-700 mb-4">Английский по навыкам</h3>
 
         <div className="flex flex-col gap-4">
@@ -32,10 +32,10 @@ function Overview() {
                 <span className="font-medium text-slate-600">{SKILL_LABELS[skill]}</span>
                 <span className="text-slate-400">{count} раз</span>
               </div>
-              <div className="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden">
+              <div className="w-full h-2.5 rounded-full bg-rose-50 overflow-hidden">
                 <div
                   className={`h-full rounded-full ${
-                    skill === weakest.skill && count < maxCount ? "bg-rose-400" : "bg-indigo-500"
+                    skill === weakest.skill && count < maxCount ? "bg-rose-400" : "bg-rose-500"
                   }`}
                   style={{ width: `${(count / maxCount) * 100}%` }}
                 />
@@ -51,7 +51,7 @@ function Overview() {
         )}
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 p-6">
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-rose-100 shadow-sm p-6">
         <h3 className="font-semibold text-slate-700 mb-4">Предметы</h3>
         <div className="flex flex-col gap-3">
           {data.subjects.map((s) => (

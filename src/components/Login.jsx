@@ -17,8 +17,8 @@ function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="w-full max-w-sm bg-white/85 backdrop-blur-sm rounded-2xl shadow-sm border border-rose-100 p-8">
         <h1 className="text-2xl font-bold text-slate-800 mb-1">
           {mode === "login" ? "Вход" : "Регистрация"}
         </h1>
@@ -35,7 +35,7 @@ function Login() {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 rounded-lg border border-rose-200 bg-white/90 focus:outline-none focus:ring-2 focus:ring-rose-400"
               placeholder="например, ali_dev"
             />
           </div>
@@ -46,7 +46,7 @@ function Login() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 rounded-lg border border-rose-200 bg-white/90 focus:outline-none focus:ring-2 focus:ring-rose-400"
               placeholder="••••••••"
             />
           </div>
@@ -55,7 +55,7 @@ function Login() {
 
           <button
             type="submit"
-            className="mt-2 py-2.5 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition"
+            className="mt-2 py-2.5 rounded-lg bg-rose-500 text-white font-semibold hover:bg-rose-600 transition"
           >
             {mode === "login" ? "Войти" : "Зарегистрироваться"}
           </button>
@@ -63,7 +63,7 @@ function Login() {
 
         <button
           onClick={() => setMode(mode === "login" ? "register" : "login")}
-          className="w-full text-center text-sm text-indigo-600 hover:text-indigo-700 mt-5"
+          className="w-full text-center text-sm text-rose-600 hover:text-rose-700 mt-5"
         >
           {mode === "login" ? "Нет аккаунта? Зарегистрируйся" : "Уже есть аккаунт? Войти"}
         </button>
