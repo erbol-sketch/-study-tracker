@@ -20,6 +20,7 @@ function emptyData() {
     ],
     tasks: [],         // { id, date, text, done }
     vocab: [],         // { id, word, translation, example }
+    habits: [],        // { id, text, marks: { "2026-07-20": true|false, ... } }
   };
 }
 
@@ -42,7 +43,10 @@ export function DataProvider({ children }) {
     }
     try {
       const raw = localStorage.getItem(storageKey(currentUser));
-      setData(raw ? JSON.parse(raw) : emptyData());
+      const parsed = raw ? JSON.parse(raw) : emptyData();
+      // на случай если у пользователя уже есть старые сохранённые данные без habits
+      if (!parsed.habits) parsed.habits = [];
+      setData(parsed);
     } catch {
       setData(emptyData());
     }
@@ -112,7 +116,7 @@ export function DataProvider({ children }) {
     }));
   }
 
-  // ---------- Tasks / schedule ----------
+  // ---------- Tasks / schedule (старый однодневный список, оставлен на всякий случай) ----------
 
   function addTask(text, date) {
     setData((prev) => ({
@@ -135,6 +139,45 @@ export function DataProvider({ children }) {
     setData((prev) => ({
       ...prev,
       tasks: prev.tasks.filter((t) => t.id !== id),
+    }));
+  }
+
+  // ---------- Habits (недельный трекер: задача x дни недели) ----------
+
+  function addHabit(text) {
+    setData((prev) => ({
+      ...prev,
+      habits: [...prev.habits, { id: crypto.randomUUID(), text, marks: {} }],
+    }));
+  }
+
+  function deleteHabit(id) {
+    setData((prev) => ({
+      ...prev,
+      habits: prev.habits.filter((h) => h.id !== id),
+    }));
+  }
+
+  function renameHabit(id, text) {
+    setData((prev) => ({
+      ...prev,
+      habits: prev.habits.map((h) => (h.id === id ? { ...h, text } : h)),
+    }));
+  }
+
+  // Клик по клетке дня циклит: не отмечено -> сделано (true) -> не сделано (false) -> не отмечено
+  function cycleHabitMark(habitId, dateKey) {
+    setData((prev) => ({
+      ...prev,
+      habits: prev.habits.map((h) => {
+        if (h.id !== habitId) return h;
+        const current = h.marks[dateKey];
+        const marks = { ...h.marks };
+        if (current === undefined) marks[dateKey] = true;
+        else if (current === true) marks[dateKey] = false;
+        else delete marks[dateKey];
+        return { ...h, marks };
+      }),
     }));
   }
 
@@ -166,6 +209,10 @@ export function DataProvider({ children }) {
     addTask,
     toggleTask,
     deleteTask,
+    addHabit,
+    deleteHabit,
+    renameHabit,
+    cycleHabitMark,
     addWord,
     deleteWord,
   };

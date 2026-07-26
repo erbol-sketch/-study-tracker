@@ -13,34 +13,48 @@ function Layout({ activeTab, setActiveTab, children }) {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      {/* Десктоп: боковая панель. Скрыта на мобильном (md:flex) */}
-      <aside className="hidden md:flex w-60 bg-white/80 backdrop-blur-sm border-r border-rose-100 flex-col p-4 shrink-0">
-        <div className="mb-8 px-2">
-          <h1 className="text-lg font-bold text-slate-800">Study Tracker</h1>
-          <p className="text-xs text-slate-400 mt-0.5">{currentUser}</p>
+      {/* Десктоп: узкая панель с иконками, при наведении раскрывается (как в Instagram) */}
+      <aside
+        className="hidden md:flex group w-20 hover:w-60 shrink-0 flex-col
+                   bg-white/80 backdrop-blur-sm border-r border-rose-100
+                   transition-all duration-300 ease-in-out overflow-hidden"
+      >
+        <div className="mb-8 px-5 pt-4 h-12 flex items-center">
+          <span className="text-xl shrink-0">🌸</span>
+          <div className="ml-3 min-w-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-75">
+            <h1 className="text-base font-bold text-slate-800 whitespace-nowrap">Study Tracker</h1>
+            <p className="text-xs text-slate-400 whitespace-nowrap">{currentUser}</p>
+          </div>
         </div>
 
-        <nav className="flex flex-col gap-1 flex-1">
+        <nav className="flex flex-col gap-1 flex-1 px-3">
           {TABS.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium transition text-left
+              title={tab.label}
+              className={`flex items-center gap-3 px-2.5 py-2.5 rounded-lg text-sm font-medium transition-colors text-left
                 ${activeTab === tab.id
                   ? "bg-rose-50 text-rose-600"
                   : "text-slate-600 hover:bg-rose-50/60"}`}
             >
-              <span>{tab.icon}</span>
-              {tab.label}
+              <span className="text-lg shrink-0 w-5 text-center">{tab.icon}</span>
+              <span className="whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-75">
+                {tab.label}
+              </span>
             </button>
           ))}
         </nav>
 
         <button
           onClick={logout}
-          className="px-3 py-2.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-rose-50/60 text-left"
+          title="Выйти"
+          className="flex items-center gap-3 mx-3 mb-4 px-2.5 py-2.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-rose-50/60 text-left"
         >
-          🚪 Выйти
+          <span className="text-lg shrink-0 w-5 text-center">🚪</span>
+          <span className="whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-75">
+            Выйти
+          </span>
         </button>
       </aside>
 
