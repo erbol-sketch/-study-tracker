@@ -130,6 +130,34 @@ export function DataProvider({ children }) {
     }));
   }
 
+  function editSubjectEntry(subjectId, entryId, text) {
+    setData((prev) => ({
+      ...prev,
+      subjects: prev.subjects.map((s) =>
+        s.id === subjectId
+          ? {
+              ...s,
+              entries: s.entries.map((e) => (e.id === entryId ? { ...e, text } : e)),
+            }
+          : s
+      ),
+    }));
+  }
+
+  function renameSubject(subjectId, name) {
+    setData((prev) => ({
+      ...prev,
+      subjects: prev.subjects.map((s) => (s.id === subjectId ? { ...s, name } : s)),
+    }));
+  }
+
+  function deleteSubject(subjectId) {
+    setData((prev) => ({
+      ...prev,
+      subjects: prev.subjects.filter((s) => s.id !== subjectId),
+    }));
+  }
+
   // ---------- Tasks (старый однодневный список, оставлен на всякий случай) ----------
 
   function addTask(text, date) {
@@ -251,6 +279,9 @@ export function DataProvider({ children }) {
     addSubject,
     addSubjectEntry,
     deleteSubjectEntry,
+    editSubjectEntry,
+    renameSubject,
+    deleteSubject,
     addTask,
     toggleTask,
     deleteTask,
